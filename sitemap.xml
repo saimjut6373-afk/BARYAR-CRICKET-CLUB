@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- 1. Home / Main Live Scoreboard & Dashboard -->
+  <url>
+    <loc>https://baryarcricket.netlify.app/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- 2. Public Live Matches Center (Ball-by-ball commentary & scores) -->
+  <url>
+    <loc>https://baryarcricket.netlify.app/?tab=public-live</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- 3. Completed Matches & Scorecards Hub -->
+  <url>
+    <loc>https://baryarcricket.netlify.app/?tab=matches</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- 4. Public Live Scorecard Direct Portal for Spectators -->
+  <url>
+    <loc>https://baryarcricket.netlify.app/scoreboard</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- 5. Tournaments & League Fixtures -->
+  <url>
+    <loc>https://baryarcricket.netlify.app/?tab=tournaments-mgmt</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 6. Official Points Table & Team Standings -->
+  <url>
+    <loc>https://baryarcricket.netlify.app/?tab=points-table</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 7. Player Career Statistics & Leaderboards -->
+  <url>
+    <loc>https://baryarcricket.netlify.app/?tab=statistics</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 8. Tournament History & Champions Trophy Room -->
+  <url>
+    <loc>https://baryarcricket.netlify.app/?tab=history</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 9. Registered Teams & Squad Rosters -->
+  <url>
+    <loc>https://baryarcricket.netlify.app/?tab=teams</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 10. Public Live Broadcast Overlay for Streaming -->
+  <url>
+    <loc>https://baryarcricket.netlify.app/overlay</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset>

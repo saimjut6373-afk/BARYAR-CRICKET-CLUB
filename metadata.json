@@ -1,0 +1,6 @@
+{
+  "name": "BaRyaR Cricket Tournament History",
+  "description": "Cricket Tournament History & Records - Tournament Winners, Team Titles, and Player Award Statistics. Developed by Suleman Baryar.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

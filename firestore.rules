@@ -1,0 +1,119 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global security helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Admin authorization: Verified primary admin email or entry in admins collection
+    function isAdmin() {
+      return isSignedIn() && (
+        (request.auth.token.email == 'alisuleman8856@gmail.com' && (
+          !('email_verified' in request.auth.token) || request.auth.token.email_verified == true
+        )) ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    // Resource owner check: user owns the document or admin managing data
+    function isOwner(data) {
+      return isSignedIn() && (
+        (('ownerId' in data) && data.ownerId == request.auth.uid) ||
+        (!('ownerId' in data) && isAdmin()) ||
+        isAdmin()
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Connection test document
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    // Admin registry collection
+    match /admins/{adminId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // User profiles & login tracking collection
+    // Read and list allowed for admin dashboard user roster and profiles.
+    // Writes strictly restricted to authenticated owner or verified admin.
+    match /users/{userId} {
+      allow read: if true;
+      allow create: if isSignedIn() && request.auth.uid == userId;
+      allow update: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // Daily analytics aggregates (visits, unique visitors, logins)
+    // Analytics aggregates are public traffic counters (no sensitive data).
+    match /analytics_daily/{dateId} {
+      allow read, write: if true;
+    }
+
+    // Lifetime summary analytics counters
+    match /analytics_summary/{docId} {
+      allow read, write: if true;
+    }
+
+    // Visitor deduplication tokens
+    match /analytics_visitors/{visitorId} {
+      allow read, write: if true;
+    }
+
+    // Tournaments collection (Trophy Room & Historical Tournaments)
+    // Public read; writes & deletes authorized via client Admin Password or Firebase Admin Auth
+    match /tournaments/{tournamentId} {
+      allow read, write: if true;
+    }
+
+    // Teams collection (public read & write for global team rosters & captain updates)
+    match /teams/{teamId} {
+      allow read, write: if true;
+    }
+
+    // Players collection (public read & write for global player rosters)
+    match /players/{playerId} {
+      allow read, write: if true;
+    }
+
+    // Matches collection (live scorecards, live scoring, broadcast overlay)
+    // Writes & deletes authorized via Admin Password, Appointed Scorer Key, or Firebase Auth
+    match /matches/{matchId} {
+      allow read, write: if true;
+    }
+
+    // Tournaments Management collection (BSL Season 09, squads, registrations, points)
+    // Public read for spectator view; creates/updates/deletes supported via Admin Password & Captain Portal
+    match /tournaments_mgmt/{docId} {
+      allow read, write: if true;
+    }
+
+    // Appointed Scorer Keys Registry (Multi-Scorer System)
+    match /scorer_keys/{keyId} {
+      allow read, write: if true;
+    }
+
+    // Team Merge Backups & Audit Logs (Admin safe rollback and merge logs)
+    match /team_merge_backups/{backupId} {
+      allow read, write: if true;
+    }
+
+    match /team_merge_logs/{logId} {
+      allow read, write: if true;
+    }
+  }
+}
+

@@ -1,0 +1,146 @@
+{
+  "entities": {
+    "Tournament": {
+      "title": "Tournament",
+      "description": "Cricket tournament record including winner, runner-up, MOTM, and optional awards",
+      "type": "object",
+      "properties": {
+        "tournamentName": { "type": "string", "maxLength": 150 },
+        "season": { "type": "string", "maxLength": 50 },
+        "date": { "type": "string", "maxLength": 30 },
+        "venue": { "type": "string", "maxLength": 150 },
+        "winnerTeam": { "type": "string", "maxLength": 100 },
+        "runnerUpTeam": { "type": "string", "maxLength": 100 },
+        "manOfTheMatch": { "type": "string", "maxLength": 100 },
+        "finalScore": { "type": "string", "maxLength": 200 },
+        "firstInningsScore": { "type": "string", "maxLength": 100 },
+        "targetScore": { "type": "string", "maxLength": 50 },
+        "chaseScore": { "type": "string", "maxLength": 100 },
+        "matchResult": { "type": "string", "maxLength": 150 },
+        "tossDetails": { "type": "string", "maxLength": 150 },
+        "playerOfTournament": { "type": "string", "maxLength": 100 },
+        "bestBowler": { "type": "string", "maxLength": 100 },
+        "bestBatter": { "type": "string", "maxLength": 100 },
+        "bestOver": { "type": "string", "maxLength": 150 },
+        "logoUrl": { "type": "string", "maxLength": 500 },
+        "notes": { "type": "string", "maxLength": 1000 },
+        "ownerId": { "type": "string", "maxLength": 128 },
+        "ownerEmail": { "type": "string", "maxLength": 150 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["tournamentName", "season", "date", "venue", "winnerTeam", "runnerUpTeam", "manOfTheMatch"]
+    },
+    "Team": {
+      "title": "Team",
+      "description": "Cricket team profile and metadata",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 100 },
+        "shortName": { "type": "string", "maxLength": 10 },
+        "city": { "type": "string", "maxLength": 100 },
+        "logoUrl": { "type": "string", "maxLength": 500 },
+        "establishedYear": { "type": "string", "maxLength": 10 },
+        "captain": { "type": "string", "maxLength": 100 },
+        "captainPhotoUrl": { "type": "string", "maxLength": 500 },
+        "notes": { "type": "string", "maxLength": 500 },
+        "ownerId": { "type": "string", "maxLength": 128 },
+        "ownerEmail": { "type": "string", "maxLength": 150 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name"]
+    },
+    "Player": {
+      "title": "Player",
+      "description": "Cricket player profile and metadata",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 100 },
+        "primaryTeam": { "type": "string", "maxLength": 100 },
+        "role": { "type": "string", "maxLength": 50 },
+        "photoUrl": { "type": "string", "maxLength": 500 },
+        "battingStyle": { "type": "string", "maxLength": 50 },
+        "bowlingStyle": { "type": "string", "maxLength": 50 },
+        "ownerId": { "type": "string", "maxLength": 128 },
+        "ownerEmail": { "type": "string", "maxLength": 150 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Registered user profile with login tracking and metadata",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 150 },
+        "displayName": { "type": "string", "maxLength": 150 },
+        "photoURL": { "type": "string", "maxLength": 500 },
+        "firstLoginAt": { "type": "string" },
+        "lastLoginAt": { "type": "string" },
+        "loginCount": { "type": "number" },
+        "providerId": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["uid", "email"]
+    },
+    "AnalyticsDaily": {
+      "title": "AnalyticsDaily",
+      "description": "Daily aggregated website visits, unique visitors, and logins",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string", "maxLength": 15 },
+        "totalVisits": { "type": "number" },
+        "uniqueVisitors": { "type": "number" },
+        "logins": { "type": "number" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["date"]
+    },
+    "AnalyticsSummary": {
+      "title": "AnalyticsSummary",
+      "description": "Overall lifetime analytics counters for quick dashboard rendering",
+      "type": "object",
+      "properties": {
+        "totalVisits": { "type": "number" },
+        "uniqueVisitors": { "type": "number" },
+        "totalLogins": { "type": "number" },
+        "totalUsers": { "type": "number" },
+        "lastCalculatedAt": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/tournaments/{tournamentId}": {
+      "schema": { "$ref": "#/entities/Tournament" },
+      "description": "Stores cricket tournament records with champions, runners-up, and awards"
+    },
+    "/teams/{teamId}": {
+      "schema": { "$ref": "#/entities/Team" },
+      "description": "Stores registered cricket teams"
+    },
+    "/players/{playerId}": {
+      "schema": { "$ref": "#/entities/Player" },
+      "description": "Stores registered cricket players"
+    },
+    "/matches/{matchId}": {
+      "schema": { "type": "object" },
+      "description": "Stores live and completed cricket matches with ball-by-ball details"
+    },
+    "/tournaments_mgmt/{docId}": {
+      "schema": { "type": "object" },
+      "description": "Stores tournament management, fixtures and points table records"
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Stores registered user profiles and login statistics"
+    },
+    "/analytics_daily/{dateId}": {
+      "schema": { "$ref": "#/entities/AnalyticsDaily" },
+      "description": "Stores daily website visits, unique visitor deduplication and login counts"
+    },
+    "/analytics_summary/{docId}": {
+      "schema": { "$ref": "#/entities/AnalyticsSummary" },
+      "description": "Stores lifetime aggregate counters for the Admin Analytics Dashboard"
+    }
+  }
+}

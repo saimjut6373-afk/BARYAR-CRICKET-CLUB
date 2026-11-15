@@ -1,0 +1,270 @@
+# Netlify Configuration for Baryar Cricket (https://baryarcricket.netlify.app/)
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+# Global security & HSTS headers (Forces all clients and Googlebot to communicate strictly over HTTPS)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    X-Content-Type-Options = "nosniff"
+
+# HTML: Prevent stale asset references by revalidating HTML on each request, declare canonical HTTPS header
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate, no-cache, no-store"
+    Link = '<https://baryarcricket.netlify.app/>; rel="canonical"'
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate, no-cache, no-store"
+    Link = '<https://baryarcricket.netlify.app/>; rel="canonical"'
+
+# 404 Error page: Never cache errors immutably
+[[headers]]
+  for = "/404.html"
+  [headers.values]
+    Content-Type = "text/html; charset=UTF-8"
+    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
+    Pragma = "no-cache"
+    Expires = "0"
+
+# Production CSS assets: explicit text/css MIME type and immutable caching
+[[headers]]
+  for = "/assets/*.css"
+  [headers.values]
+    Content-Type = "text/css; charset=UTF-8"
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+    X-Content-Type-Options = "nosniff"
+
+# Production JavaScript assets: explicit application/javascript MIME type and immutable caching
+[[headers]]
+  for = "/assets/*.js"
+  [headers.values]
+    Content-Type = "application/javascript; charset=UTF-8"
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+    X-Content-Type-Options = "nosniff"
+
+# Production images and font assets
+[[headers]]
+  for = "/assets/*.svg"
+  [headers.values]
+    Content-Type = "image/svg+xml; charset=UTF-8"
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/assets/*.png"
+  [headers.values]
+    Content-Type = "image/png"
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/assets/*.jpg"
+  [headers.values]
+    Content-Type = "image/jpeg"
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/assets/*.jpeg"
+  [headers.values]
+    Content-Type = "image/jpeg"
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/assets/*.webp"
+  [headers.values]
+    Content-Type = "image/webp"
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/assets/*.woff2"
+  [headers.values]
+    Content-Type = "font/woff2"
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+# Favicon & Branding Icons
+[[headers]]
+  for = "/favicon.ico"
+  [headers.values]
+    Content-Type = "image/x-icon"
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=86400"
+    X-Robots-Tag = "all"
+
+[[headers]]
+  for = "/favicon-*.png"
+  [headers.values]
+    Content-Type = "image/png"
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=86400"
+    X-Robots-Tag = "all"
+
+[[headers]]
+  for = "/apple-touch-icon.png"
+  [headers.values]
+    Content-Type = "image/png"
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=86400"
+    X-Robots-Tag = "all"
+
+[[headers]]
+  for = "/android-chrome-*.png"
+  [headers.values]
+    Content-Type = "image/png"
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=86400"
+    X-Robots-Tag = "all"
+
+[[headers]]
+  for = "/og-image.png"
+  [headers.values]
+    Content-Type = "image/png"
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=86400"
+    X-Robots-Tag = "all"
+
+[[headers]]
+  for = "/favicon.svg"
+  [headers.values]
+    Content-Type = "image/svg+xml; charset=UTF-8"
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/site.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json; charset=UTF-8"
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Content-Type = "application/manifest+json; charset=UTF-8"
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=86400"
+
+# SEO sitemap & robots headers
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Content-Type = "application/xml; charset=UTF-8"
+    X-Content-Type-Options = "nosniff"
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=UTF-8"
+    Cache-Control = "public, max-age=3600"
+
+# Force HTTPS redirection for any non-secure HTTP request
+[[redirects]]
+  from = "http://baryarcricket.netlify.app/*"
+  to = "https://baryarcricket.netlify.app/:splat"
+  status = 301
+  force = true
+
+# Explicit pass-through rules for SEO and icon files
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap.xml"
+  status = 200
+
+[[redirects]]
+  from = "/robots.txt"
+  to = "/robots.txt"
+  status = 200
+
+[[redirects]]
+  from = "/favicon.ico"
+  to = "/favicon.ico"
+  status = 200
+
+[[redirects]]
+  from = "/favicon-96x96.png"
+  to = "/favicon-96x96.png"
+  status = 200
+
+[[redirects]]
+  from = "/favicon-48x48.png"
+  to = "/favicon-48x48.png"
+  status = 200
+
+[[redirects]]
+  from = "/favicon-32x32.png"
+  to = "/favicon-32x32.png"
+  status = 200
+
+[[redirects]]
+  from = "/favicon-16x16.png"
+  to = "/favicon-16x16.png"
+  status = 200
+
+[[redirects]]
+  from = "/favicon-192x192.png"
+  to = "/favicon-192x192.png"
+  status = 200
+
+[[redirects]]
+  from = "/favicon-512x512.png"
+  to = "/favicon-512x512.png"
+  status = 200
+
+[[redirects]]
+  from = "/apple-touch-icon.png"
+  to = "/apple-touch-icon.png"
+  status = 200
+
+[[redirects]]
+  from = "/android-chrome-192x192.png"
+  to = "/android-chrome-192x192.png"
+  status = 200
+
+[[redirects]]
+  from = "/android-chrome-512x512.png"
+  to = "/android-chrome-512x512.png"
+  status = 200
+
+[[redirects]]
+  from = "/og-image.png"
+  to = "/og-image.png"
+  status = 200
+
+[[redirects]]
+  from = "/favicon.svg"
+  to = "/favicon.svg"
+  status = 200
+
+[[redirects]]
+  from = "/site.webmanifest"
+  to = "/site.webmanifest"
+  status = 200
+
+[[redirects]]
+  from = "/manifest.json"
+  to = "/manifest.json"
+  status = 200
+
+# Missing static assets in /assets/* MUST return real 404, never fallback to index.html with 200
+[[redirects]]
+  from = "/assets/*"
+  to = "/404.html"
+  status = 404
+
+# Client-side SPA routing fallback (for app pages only)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
